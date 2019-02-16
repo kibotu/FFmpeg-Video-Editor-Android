@@ -5,10 +5,12 @@ import android.media.MediaPlayer;
 import android.media.audiofx.Visualizer;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import videoeditor.bhuvnesh.com.ffmpegvideoeditor.R;
 import videoeditor.bhuvnesh.com.ffmpegvideoeditor.views.VisualizerView;
 
@@ -33,7 +35,7 @@ public class AudioPreviewActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        mVisualizerView = (VisualizerView) findViewById(R.id.visualizerView);
+        mVisualizerView = findViewById(R.id.visualizerView);
 
 
     }
@@ -53,6 +55,7 @@ public class AudioPreviewActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -66,8 +69,8 @@ public class AudioPreviewActivity extends AppCompatActivity {
     private void initAudio() {
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
         String filePath = getIntent().getStringExtra(FILEPATH);
-        TextView tvInstruction=(TextView) findViewById(R.id.tvInstruction);
-        tvInstruction.setText("Audio stored at path "+filePath);
+        TextView tvInstruction = findViewById(R.id.tvInstruction);
+        tvInstruction.setText("Audio stored at path " + filePath);
         mMediaPlayer = MediaPlayer.create(this, Uri.parse(filePath));
 
         setupVisualizerFxAndUI();
@@ -90,6 +93,7 @@ public class AudioPreviewActivity extends AppCompatActivity {
         mMediaPlayer.setLooping(true);
 
     }
+
     private void setupVisualizerFxAndUI() {
 
         // Create the Visualizer object and attach it to our media player.

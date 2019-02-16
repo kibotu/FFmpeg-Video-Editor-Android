@@ -3,12 +3,14 @@ package videoeditor.bhuvnesh.com.ffmpegvideoeditor.activity;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.VideoView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import videoeditor.bhuvnesh.com.ffmpegvideoeditor.R;
 
 
@@ -29,10 +31,10 @@ public class PreviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_preview);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        videoView = (VideoView) findViewById(R.id.videoView);
-        seekBar = (SeekBar) findViewById(R.id.seekBar);
+        videoView = findViewById(R.id.videoView);
+        seekBar = findViewById(R.id.seekBar);
 
-        TextView tvInstruction = (TextView) findViewById(R.id.tvInstruction);
+        TextView tvInstruction = findViewById(R.id.tvInstruction);
         String filePath = getIntent().getStringExtra(FILEPATH);
 
 
@@ -103,6 +105,7 @@ public class PreviewActivity extends AppCompatActivity {
 
         }
     };
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // handle arrow click here

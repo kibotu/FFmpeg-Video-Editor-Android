@@ -18,10 +18,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.core.app.ActivityCompat;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,11 +25,16 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import com.github.hiteshsondhi88.libffmpeg.ExecuteBinaryResponseHandler;
 import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
 import com.github.hiteshsondhi88.libffmpeg.LoadBinaryResponseHandler;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegCommandAlreadyRunningException;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedException;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.commons.io.comparator.LastModifiedFileComparator;
 import org.florescu.android.rangeseekbar.RangeSeekBar;
@@ -73,27 +74,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mContext = this;
-        final TextView uploadVideo = (TextView) findViewById(R.id.uploadVideo);
-        TextView cutVideo = (TextView) findViewById(R.id.cropVideo);
-        TextView compressVideo = (TextView) findViewById(R.id.compressVideo);
-        TextView extractImages = (TextView) findViewById(R.id.extractImages);
-        TextView fadeEffect = (TextView) findViewById(R.id.fadeEffect);
-        TextView increaseSpeed = (TextView) findViewById(R.id.increaseSpeed);
-        TextView decreaseSpeed = (TextView) findViewById(R.id.decreaseSpeed);
-        final TextView reverseVideo = (TextView) findViewById(R.id.reverseVideo);
+        final TextView uploadVideo = findViewById(R.id.uploadVideo);
+        TextView cutVideo = findViewById(R.id.cropVideo);
+        TextView compressVideo = findViewById(R.id.compressVideo);
+        TextView extractImages = findViewById(R.id.extractImages);
+        TextView fadeEffect = findViewById(R.id.fadeEffect);
+        TextView increaseSpeed = findViewById(R.id.increaseSpeed);
+        TextView decreaseSpeed = findViewById(R.id.decreaseSpeed);
+        final TextView reverseVideo = findViewById(R.id.reverseVideo);
 
 
-        tvLeft = (TextView) findViewById(R.id.tvLeft);
-        tvRight = (TextView) findViewById(R.id.tvRight);
+        tvLeft = findViewById(R.id.tvLeft);
+        tvRight = findViewById(R.id.tvRight);
 
-        final TextView extractAudio = (TextView) findViewById(R.id.extractAudio);
+        final TextView extractAudio = findViewById(R.id.extractAudio);
         if (Build.VERSION.SDK_INT == 16)
             extractAudio.setVisibility(View.GONE);
         else
             extractAudio.setVisibility(View.VISIBLE);
-        videoView = (VideoView) findViewById(R.id.videoView);
-        rangeSeekBar = (RangeSeekBar) findViewById(R.id.rangeSeekBar);
-        mainlayout = (ScrollView) findViewById(R.id.mainlayout);
+        videoView = findViewById(R.id.videoView);
+        rangeSeekBar = findViewById(R.id.rangeSeekBar);
+        mainlayout = findViewById(R.id.mainlayout);
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle(null);
         progressDialog.setCancelable(false);
@@ -203,9 +204,9 @@ public class MainActivity extends AppCompatActivity {
                 if (selectedVideoUri != null) {
                     choice = 8;
                     final Dialog dialog = showSingleOptionTextDialog(mContext);
-                    TextView tvDialogHeading = (TextView) dialog.findViewById(R.id.tvDialogHeading);
-                    TextView tvDialogText = (TextView) dialog.findViewById(R.id.tvDialogText);
-                    TextView tvDialogSubmit = (TextView) dialog.findViewById(R.id.tvDialogSubmit);
+                    TextView tvDialogHeading = dialog.findViewById(R.id.tvDialogHeading);
+                    TextView tvDialogText = dialog.findViewById(R.id.tvDialogText);
+                    TextView tvDialogSubmit = dialog.findViewById(R.id.tvDialogSubmit);
                     tvDialogHeading.setText("Process in Progress");
                     tvDialogText.setText(R.string.dialogMessage);
                     tvDialogSubmit.setText("Okay");
@@ -281,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+                                           String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case 100: {
 
@@ -463,7 +464,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "startTrim: endMs: " + endMs);
         filePath = dest.getAbsolutePath();
         //String[] complexCommand = {"-i", yourRealPath, "-ss", "" + startMs / 1000, "-t", "" + endMs / 1000, dest.getAbsolutePath()};
-        String[] complexCommand = {"-ss", "" + startMs / 1000, "-y", "-i", yourRealPath, "-t", "" + (endMs - startMs) / 1000,"-vcodec", "mpeg4", "-b:v", "2097152", "-b:a", "48000", "-ac", "2", "-ar", "22050", filePath};
+        String[] complexCommand = {"-ss", "" + startMs / 1000, "-y", "-i", yourRealPath, "-t", "" + (endMs - startMs) / 1000, "-vcodec", "mpeg4", "-b:v", "2097152", "-b:a", "48000", "-ac", "2", "-ar", "22050", filePath};
 
         execFFmpegBinary(complexCommand);
 
@@ -525,7 +526,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "startTrim: dest: " + dest.getAbsolutePath());
 
         String[] complexCommand = {"-y", "-i", yourRealPath, "-an", "-r", "1", "-ss", "" + startMs / 1000, "-t", "" + (endMs - startMs) / 1000, dest.getAbsolutePath()};
-  /*   Remove -r 1 if you want to extract all video frames as images from the specified time duration.*/
+        /*   Remove -r 1 if you want to extract all video frames as images from the specified time duration.*/
         execFFmpegBinary(complexCommand);
 
     }
@@ -554,7 +555,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "startTrim: src: " + yourRealPath);
         Log.d(TAG, "startTrim: dest: " + dest.getAbsolutePath());
         filePath = dest.getAbsolutePath();
-        String[] complexCommand = {"-y", "-i", yourRealPath, "-acodec", "copy", "-vf", "fade=t=in:st=0:d=5,fade=t=out:st=" + String.valueOf(duration - 5) + ":d=5", filePath};
+        String[] complexCommand = {"-y", "-i", yourRealPath, "-acodec", "copy", "-vf", "fade=t=in:st=0:d=5,fade=t=out:st=" + (duration - 5) + ":d=5", filePath};
         execFFmpegBinary(complexCommand);
 
     }
@@ -683,7 +684,7 @@ public class MainActivity extends AppCompatActivity {
         destDir.mkdir();
         for (int i = 0; i < files.length; i++) {
             File dest = new File(destDir, filePrefix + i + fileExtn);
-            String command[] = {"-i", files[i].getAbsolutePath(), "-vf", "reverse", "-af", "areverse", dest.getAbsolutePath()};
+            String[] command = {"-i", files[i].getAbsolutePath(), "-vf", "reverse", "-af", "areverse", dest.getAbsolutePath()};
             if (i == files.length - 1)
                 lastReverseCommand = command;
             execFFmpegBinary(command);
@@ -963,5 +964,4 @@ public class MainActivity extends AppCompatActivity {
         textDialog.setCancelable(false);
         return textDialog;
     }
-
 }

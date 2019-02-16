@@ -2,11 +2,12 @@ package videoeditor.bhuvnesh.com.ffmpegvideoeditor.adapter;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
@@ -21,7 +22,7 @@ public class PreviewImageAdapter extends RecyclerView.Adapter<PreviewImageAdapte
 
     private ArrayList<String> paths;
 
-    public PreviewImageAdapter( ArrayList<String> paths) {
+    public PreviewImageAdapter(ArrayList<String> paths) {
         this.paths = paths;
     }
 
@@ -33,7 +34,7 @@ public class PreviewImageAdapter extends RecyclerView.Adapter<PreviewImageAdapte
         return new MyViewHolder(itemView);
     }
 
-    @Override
+    @Overridex
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Bitmap bmp = BitmapFactory.decodeFile(paths.get(position));
         holder.ivPhoto.setImageBitmap(bmp);
@@ -50,7 +51,7 @@ public class PreviewImageAdapter extends RecyclerView.Adapter<PreviewImageAdapte
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            ivPhoto = (ImageView) itemView.findViewById(R.id.ivPhoto);
+            ivPhoto = itemView.findViewById(R.id.ivPhoto);
         }
     }
 
